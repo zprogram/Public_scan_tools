@@ -8,8 +8,8 @@ To Do List
 | 测试人员 | 测试目标                          | 测试结果 |
 | -------- | --------------------------------- | -------- |
 | skeep    | information_gathering_beta-master |          |
-|          | InformationCollector-master       |          |
-|          | subDomainsBrute-master            |          |
+| skeep    | InformationCollector-master       |          |
+| lipss    | subDomainsBrute-master            |          |
 | lipss    | wydomain-wydomain2                |          |
 
 
