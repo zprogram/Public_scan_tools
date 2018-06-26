@@ -2,12 +2,12 @@
 
 - 20170626~0629 1-信息收集-子域名方法集合
 
-| 测试人员 | 测试目标                          | 测试结果 |
-| -------- | --------------------------------- | -------- |
-| skeep    | information_gathering_beta-master |          |
-| skeep    | InformationCollector-master       |          |
-| lipss    | subDomainsBrute-master            |          |
-| lipss    | wydomain-wydomain2                |          |
+| 测试人员 | 测试目标                          | 测试结果 |  备注                                                                                                      |
+| -------- | --------------------------------- | -------- | --------                                                                                                   |
+| skeep    | information_gathering_beta-master |          |                                                                                                            |
+| skeep    | InformationCollector-master       |          |                                                                                                            |
+| lipss    | subDomainsBrute-master            | 字典破解 | 使用DNSPOD 阿里云的公共DNS进行查询，使用字典暴力破解域名 |
+| lipss    | wydomain-wydomain2                |          |                                                                                                            |
 
 
 - 待定 2-信息收集-Web站点信息收集
