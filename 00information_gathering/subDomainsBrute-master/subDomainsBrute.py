@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# -*- encoding: utf-8 -*-
+# -*- coding: utf-8 -*-
 """
     subDomainsBrute 1.1
     A simple and fast sub domains brute tool for pentesters
@@ -226,12 +226,12 @@ if __name__ == '__main__':
     start_time = time.time()
     # make tmp dirs
     tmp_dir = 'tmp/%s_%s' % (args[0], int(time.time()))
-    if not os.path.exists(tmp_dir):
+    if not os.path.exists(tmp_dir):     # 生成路径
         os.makedirs(tmp_dir)
 
     multiprocessing.freeze_support()
     all_process = []
-    dns_servers = load_dns_servers()
+    dns_servers = load_dns_servers()  # 载入DNS服务器
     next_subs = load_next_sub(options)
     scan_count = multiprocessing.Value('i', 0)
     found_count = multiprocessing.Value('i', 0)
@@ -271,6 +271,7 @@ if __name__ == '__main__':
         found_count.value, scan_count.value, time.time() - start_time)
     print_msg(msg, line_feed=True)
     out_file_name = get_out_file_name(args[0], options)
+    # 输出路径位置
     with open(out_file_name, 'w') as f:
         for _file in glob.glob(tmp_dir + '/*.txt'):
             with open(_file,'r') as tmp_f:

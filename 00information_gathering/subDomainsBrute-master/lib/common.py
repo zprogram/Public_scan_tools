@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 # common functions
 
 import sys
@@ -73,7 +75,7 @@ def load_dns_servers():
 def load_next_sub(options):
     next_subs = []
     _set = set()
-    _file = 'dict/next_sub_full.txt' if options.full_scan else 'dict/next_sub.txt'
+    _file = 'dict/next_sub_full.txt' if options.full_scan else 'dict/next_sub.txt'   # 字典路径
     with open(_file) as f:
         for line in f:
             sub = line.strip()
