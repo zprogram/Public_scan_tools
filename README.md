@@ -6,7 +6,8 @@
 | -------- | --------------------------------- | -------- | --------                                                                                                   |
 | skeep    | information_gathering_beta-master |          |                                                                                                            |
 | skeep    | InformationCollector-master       |          |                                                                                                            |
-| lipss    | subDomainsBrute-master            | 字典破解 | 使用DNSPOD 阿里云的公共DNS进行查询，使用字典暴力破解域名 |
+| lipss    | subDomainsBrute-master            | 字典破解 | 使用DNSPOD 阿里云的公共DNS进行查询，使用字典暴力破解域名，
+                                                            字典路径：dict/next_sub_full.txt、dict/next_sub.txt                                                        |
 | lipss    | wydomain-wydomain2                |          |                                                                                                            |
 
 
