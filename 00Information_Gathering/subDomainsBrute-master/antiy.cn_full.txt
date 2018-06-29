@@ -1,7 +1,7 @@
-tools.antiy.cn                	47.91.137.195
 login.antiy.cn                	192.168.16.250
-share.antiy.cn                	192.168.16.250
-bbs.antiy.cn                  	182.92.182.99
+tools.antiy.cn                	47.91.137.195
+www.antiy.cn                  	47.91.137.195
+ent.antiy.cn                  	54.251.205.238
 fx.antiy.cn                   	54.251.205.238
 mail.antiy.cn                 	42.156.235.92
 vds.antiy.cn                  	54.251.205.238

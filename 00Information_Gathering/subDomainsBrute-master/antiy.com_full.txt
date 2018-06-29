@@ -1,0 +1,16 @@
+www.antiy.com                 	54.254.105.99
+dz.antiy.com                  	59.108.68.159
+record.antiy.com              	61.180.255.130
+virus.antiy.com               	221.207.255.60
+ftp.antiy.com                 	54.254.105.99
+cert.antiy.com                	1.189.209.229
+ent.antiy.com                 	54.251.205.238
+fx.antiy.com                  	54.251.205.238
+hr.antiy.com                  	54.251.205.238
+vds.antiy.com                 	54.251.205.238
+tds.antiy.com                 	54.251.205.238
+cp.antiy.com                  	10.255.121.100
+ts.antiy.com                  	219.147.182.148
+bg.antiy.com                  	1.62.255.205
+wtc.antiy.com                 	47.88.11.58
+dl1.antiy.com                 	117.34.78.168

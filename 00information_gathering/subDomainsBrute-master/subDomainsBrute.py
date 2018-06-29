@@ -1,5 +1,5 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+#!/usr/bin/python
+#coding:utf-8
 """
     subDomainsBrute 1.1
     A simple and fast sub domains brute tool for pentesters
@@ -20,7 +20,7 @@ import glob
 from lib.cmdline import parse_args
 from lib.common import is_intranet, load_dns_servers, load_next_sub, print_msg, get_out_file_name, \
     user_abort
-
+import shutil
 
 class SubNameBrute:
     def __init__(self, target, options, process_num, dns_servers, next_subs,
@@ -49,7 +49,7 @@ class SubNameBrute:
         self.ex_resolver = dns.resolver.Resolver(configure=False)
         self.ex_resolver.nameservers = dns_servers
         self.local_time = time.time()
-        self.outfile = open('%s/%s_part_%s.txt' % (tmp_dir, target, process_num), 'w')
+        self.outfile = open('%s/%s_part_%s.txt' % (tmp_dir, target, process_num), 'w') #  建立目录
 
     def _load_sub_names(self):
         if self.options.full_scan and self.options.file == 'subnames.txt':
@@ -211,6 +211,9 @@ class SubNameBrute:
         gevent.joinall(threads)
 
 
+
+
+
 def run_process(target, options, process_num, dns_servers, next_subs, scan_count, found_count, queue_size_list,
                 tmp_dir):
     signal.signal(signal.SIGINT, user_abort)
@@ -221,12 +224,16 @@ def run_process(target, options, process_num, dns_servers, next_subs, scan_count
     s.run()
 
 
-if __name__ == '__main__':
-    options, args = parse_args()
-    start_time = time.time()
-    # make tmp dirs
-    tmp_dir = 'tmp/%s_%s' % (args[0], int(time.time()))
-    if not os.path.exists(tmp_dir):     # 生成路径
+
+
+def multi_target_test(options,target):
+    # 删除文件
+    tem_dir = os.getcwd() + "\\tmp\\"
+    if os.path.exists(tem_dir):
+        shutil.rmtree(tem_dir)
+
+    tmp_dir = os.getcwd()+'//tmp/%s_%s' % (target, int(time.time()))
+    if not os.path.exists(tmp_dir):  # 生成路径
         os.makedirs(tmp_dir)
 
     multiprocessing.freeze_support()
@@ -241,7 +248,7 @@ if __name__ == '__main__':
         print '[+] Init %s scan process.' % options.process
         for process_num in range(options.process):
             p = multiprocessing.Process(target=run_process,
-                                        args=(args[0], options, process_num,
+                                        args=(target, options, process_num,
                                               dns_servers, next_subs,
                                               scan_count, found_count,queue_size_list,
                                               tmp_dir)
@@ -252,7 +259,7 @@ if __name__ == '__main__':
         while all_process:
             for p in all_process:
                 if not p.is_alive():
-                    all_process.remove(p)
+                    all_process.remove(p)    # 如果进程结束就退出
             groups_count = 0
             for c in queue_size_list:
                 groups_count += c
@@ -270,11 +277,27 @@ if __name__ == '__main__':
     msg = '[+] All Done. %s found, %s scanned in %.1f seconds.' % (
         found_count.value, scan_count.value, time.time() - start_time)
     print_msg(msg, line_feed=True)
-    out_file_name = get_out_file_name(args[0], options)
+    out_file_name = get_out_file_name(target, options)
     # 输出路径位置
     with open(out_file_name, 'w') as f:
         for _file in glob.glob(tmp_dir + '/*.txt'):
-            with open(_file,'r') as tmp_f:
+            with open(_file, 'r') as tmp_f:
                 content = tmp_f.read()
             f.write(content)
+    # 删除文件
+    shutil.rmtree(tem_dir)
     print '[+] The output file is %s' % out_file_name
+
+if __name__ == '__main__':
+    options, args = parse_args()
+    start_time = time.time()
+    # make tmp dirs
+
+    # 多域名模式
+    List = ["antiy.cn","antiy.com"]
+
+    for list_value in List:
+        ret = multi_target_test(options,list_value)
+        print "[+]!!! %s finish !!!"  %  list_value
+
+
