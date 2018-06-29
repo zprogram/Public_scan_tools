@@ -3,23 +3,16 @@
 #
 #子域名扫描框架
 #
-
-import requests
-from termcolor import colored
-from bs4 import BeautifulSoup
-import threading
-import time
-import sys
+from subdomain_gather_from_baidu import crew
 import json
-import re
-import os
-import logging
 import random
-import base64
+import re
+
+from bs4 import BeautifulSoup
+import time
+import requests
 import urllib3.contrib.pyopenssl
 urllib3.contrib.pyopenssl.inject_into_urllib3()
-
-#MY_PROXY = { "http":"127.0.0.1:8080","https":"127.0.0.1:8080"}
 MY_PROXY = {}
 USER_AGENTS=[
     'Mozilla/4.0 (compatible; MSIE 5.0; SunOS 5.10 sun4u; X11)',
@@ -39,10 +32,6 @@ def search_subdomain_from_virustotal(target):
     #
     #  效果比较好
 
-    #
-    #需要确认一下crt.sh的功能
-    #
-    #
     print("Start search_subdomain_from_virustotal")
     domain_result = []
     url = "https://www.virustotal.com/ui/domains/"+target+"/subdomains?limit=30"
@@ -70,94 +59,72 @@ def search_subdomain_from_virustotal(target):
     print("Complete search_cert_from_crt",'green')
     return domain_result
 
-
-    '''
-        while result["links"].has_key("next"):
-        try:
-            resp = requests.get(result["links"]["next"], timeout=10, proxies=MY_PROXY, headers={"User-Agent": random.choice(USER_AGENTS)})
-            result = json.loads(resp.text)
-            for i in range(len(result["data"])):
-                print (i)
-                domain_result.append(result["data"][i]["id"])
-            time.sleep(1)
-        except:
-
-            continue
-    print("Complete search_cert_from_crt",'green')
-    return domain_result
-    
-    '''
-
-    
-    
-
-
-
-
-def search_cert_from_crt(target):
+def search_subdomain_from_crt(target):
     #  功能： 传入一个顶级域名，返回子域名列表，利用的网站是 crt.sh
     #
     #
-    #  bug：返回的结果如下
-    #['57673ceefad3259fddc47a241c74ae58319649b692d5760e505811998b186cbe']
-    #['1a40d5f60f408df4a0740e8f1dd0d94fbb3427b363fd0fa3b8879221a7a5c76f']
-    #['c165f38dc2362c33eeae401ff1e36bfdfa72fd251fccf4ff56bcdbb057fe427b']
-    #['83e8d21a85eb4555f6e9bb186232f20e9bf53530bb0245d1984f952927041f2b']
-    #['1e4df000f5e57f35d97191dd6af268d7ef9861f6f6b458acdef269b83844f1ef']
-    #['d444fa7ef4c497c558cb8468510cf89dc154693acca0654e59cc8985cba851a1']
-    #['534edf5b354cf0754074d1c6855dc1ec36a797ee225ce961ab15577e62efac63']
-    #['b2e0a402fc33e26d508aa43c1e1f7ef01254a2de6fc9b1942b0da9804b2277c6']
-    #['7d3eba5fe60745796470d22ded9d0266bf42fc41b2206e8d20b2ddc9db25c4fe']
-    #['483ae70b7cf259bf9d179984b3221a2211834e5eb3d00de7cd717540fcf5393c']
-    #
-    #需要确认一下crt.sh的功能
-    #
-    #
     print("Start search_cert_from_crt")
-    crt_api = "https://crt.sh/?q="
+    crt_api = "https://crt.sh/?q=%25."
     cert_result = []
     try:
-        requests.adapters.DEFAULT_RETRIES = 5
-        resp = requests.get("https://crt.sh/?q=baidu.com", headers={'Connection':'close',"User-Agent": random.choice(USER_AGENTS)})
-    except:
-        print("search_cert_from_crt connect error")
+        print crt_api+target
+        resp = requests.get(crt_api+target, verify=False)
+        time.sleep(10)
+    except Exception as e:
+
+        print(e.message)
         return []
-    id_result = re.findall("href=\"\?id=(.*?)\"",resp.text)
-    for i in id_result:
-        try:
-            resp = requests.get("https://crt.sh/?id="+i, headers={'Connection':'close'})
-            result = re.findall("\"//censys.io/certificates/(.*?)\"",resp.text)
-            print(result)
-            #cert_result.append(result[0])
-        except:
-            continue
+
+
+    soup=BeautifulSoup(resp,"lxml")
+    tr_list=soup.select("tr")
+    print tr_list
     cert_result = list(set(cert_result))
     print("Complete search_cert_from_crt")
     return cert_result
 
+def search_subdomain_from_threatcrowd(target):
+    print("Start search_subdomain_from_threatcrowd")
+    try:
+        url = "https://www.threatcrowd.org/graphHtml.php?domain="+target
+        resp = requests.get(url, timeout=10, headers={"Host":"www.threatcrowd.org","User-Agent": random.choice(USER_AGENTS),"Cookie":"__cfduid=da6b5b8144bfd70de8c3eb0aa7f0884661530196391; cf_clearance=e7a44a7fc942444b06a7817a5e02a5527adefd4b-1530196396-14400; _ga=GA1.2.736277610.1530196427; _gid=GA1.2.503529654.1530196427; __ar_v4=4OCRKBF4JJENXICP676FJT%3A20180628%3A2%7CKDBRCBINVREGNJUXIQKBDP%3A20180628%3A2%7CPIUCN4PSYRCCHBHOGPVN5Q%3A20180628%3A2"})
+        requests.adapters.DEFAULT_RETRIES = 5
+        print resp.status_code
+        domain_result = re.findall("'>([^>]*?\."+target+")</a>",resp.text)
+        print domain_result
+        print("Complete search_subdomain_from_threatcrowd")
+        return domain_result
+    except Exception,e:
+        print e
+        return []
 
+def search_subdomain_from_findsubdomain(target):
+    print("Start search_subdomain_from_findsubdomain",'green')
+    try:
+        url = "https://findsubdomains.com/subdomains-of/"+target
+        resp = requests.get(url, timeout=10, proxies=MY_PROXY, headers={"User-Agent": random.choice(USER_AGENTS)})
+        domain_result = re.findall("'([^<>\"/]*?\."+target+")",resp.text)
+        print("Complete search_subdomain_from_findsubdomain",'green')
+        return domain_result
+    except Exception,e:
+        print("search_subdomain_from_findsubdomain connect error",'red')
+        return []
 
-def scan_subdamin_funcs(target):
-    cert_list = search_cert_from_crt(target)
-    print (cert_list)
+def sub_domain(url):
     '''
-    domains.extend(search_subdomain_from_virustotal(target))
-    domains.extend(search_subdomain_from_threatcrowd(target))
-    domains.extend(search_subdomain_from_findsubdomain(target))
+    通过浏览器进行子域名收集
     '''
-    
-
-
-
-
-
-
-
-
-
+    instance = crew(url)
+    results = instance.main()
+    for info in results:
+        print (info)
 
 if __name__ == '__main__':
+
+
     global domains
     top_damain="qq.com"
-    #scan_subdamin_funcs(top_damain) 测试完成
+    #print(search_subdomain_from_crt(top_damain))
     #print(search_subdomain_from_virustotal(top_damain))
+    #print(search_subdomain_from_threatcrowd(top_damain))
+    sub_domain(top_damain)
