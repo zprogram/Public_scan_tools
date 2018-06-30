@@ -49,9 +49,6 @@ def from_threatcrowd(target):
 
         #from_findsubdomain(target)
 
-
-
-
 def from_findsubdomain(target):
     print("Start search_subdomain_from_findsubdomain")
     try:
