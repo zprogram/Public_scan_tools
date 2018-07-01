@@ -74,7 +74,7 @@ def read_file(domain_path):
     target = []
     # 判断文件路径是否存在，如果不存在直接退出，否则读取文件内容
     if (not os.path.exists(domain_path)):
-        print 'Please confirm correct filepath ，file_contenxt.txt!'
+        print 'Please confirm correct filepath!'
         sys.exit(0)
     else:
         # target
