@@ -13,7 +13,7 @@ threads_count = 16
 # -------------------------------------------------
 
 # 超时时间
-timeout = 5
+timeout = 30
 
 # 是否允许URL重定向
 allow_redirects = True
@@ -26,6 +26,9 @@ allow_random_useragent = False
 
 # 是否允许随机X-Forwarded-For
 allow_random_x_forward = False
+
+#百度搜索起始页
+page_num=0
 
 # 随机HTTP头
 USER_AGENTS = [
