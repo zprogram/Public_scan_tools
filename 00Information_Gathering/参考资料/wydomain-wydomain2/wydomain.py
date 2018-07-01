@@ -35,8 +35,8 @@ def run(args):
         sys.exit(1)
 
     # init _cache_path
-    script_path = os.path.dirname(os.path.abspath(__file__))
-    _cache_path = os.path.join(script_path, 'result/{0}'.format(domain))
+    script_path = os.path.dirname(os.path.abspath(__file__))                # .py文件的绝对路径
+    _cache_path = os.path.join(script_path, 'result/{0}'.format(domain))  #  缓存路径
     if not os.path.exists(_cache_path):
         os.makedirs(_cache_path, 0777)
 
@@ -147,7 +147,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     try:
-        run(args)
+        run(args)    # 主要函数
     except KeyboardInterrupt:
         logging.info("Ctrl C - Stopping Client")
         sys.exit(1)
