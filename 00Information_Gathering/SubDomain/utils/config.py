@@ -80,11 +80,11 @@ proxies = {
 }
 
 # 全局遍历
-domain_files = os.getcwd()+"\\domain.txt"
+domain_files = os.getcwd()+"//domain.txt"
 
 # 单个域名生成路径
-out_dir = os.getcwd() + "\\result\\*\\"
+out_dir = os.getcwd() + "//result//*//"
 
 # 完整域名结果
-out_domain_result = os.getcwd() + "\\domain_result.txt"
+out_domain_result = os.getcwd() + "//domain_result.txt"
 
