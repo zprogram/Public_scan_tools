@@ -1,7 +1,7 @@
 import requests
 import json
 import random
-from .config import *
+from config import *
 import time
 
 

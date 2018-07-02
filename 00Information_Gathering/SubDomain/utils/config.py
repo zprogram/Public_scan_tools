@@ -8,6 +8,11 @@ allow_ssl_verify = False
 # 线程数
 threads_count = 16
 
+# 进程数
+process_count = 6
+
+
+
 # -------------------------------------------------
 # requests 配置项
 # -------------------------------------------------
@@ -91,3 +96,12 @@ out_dir = os.getcwd() + "//result//*//"
 # 完整域名结果
 out_domain_result = os.getcwd() + "//domain_result.txt"
 
+
+# 域名字典（完整扫描与精简扫描，默认为完整扫描）
+## 完整字典扫描
+doamin_dict = "full"
+## 精简字典扫描
+#doamin_dict = "simple"
+
+# 忽略指向专用 IPs 的域
+domain_ips = False

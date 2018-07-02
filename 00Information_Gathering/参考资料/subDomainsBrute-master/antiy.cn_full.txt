@@ -1,3 +1,0 @@
-www.antiy.cn                  	47.91.137.195
-tools.antiy.cn                	47.91.137.195
-login.antiy.cn                	192.168.16.250
