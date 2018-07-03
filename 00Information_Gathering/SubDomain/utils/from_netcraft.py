@@ -6,7 +6,6 @@ from .config import *
 
 def from_netcraft(target):
     subdomains=[]
-
     try:
         url = "http://searchdns.netcraft.com/?restriction=site+contains&host="+target
         page = requests.get(url, timeout=timeout, headers=headers)

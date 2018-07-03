@@ -14,7 +14,7 @@
 |          |                                   |          | 进行查询，使用字典暴力破解域名，字典路径：dict/next_sub_full.txt、dict/next_sub.txt |
 | lipss    | wydomain-wydomain2                |          |                                                                                                            |
 
-- 20170701 合并方法
+- 20180701 合并方法
     - 讨论完成子域名搜集的大体框架
     - skeep 完成从6个网站搜集子域名的功能函数,具体用到的网站如下
         - baidu.com
@@ -23,7 +23,13 @@
         - findsubdomain
         - netcraft
         - virustotal
-     
+- 20180703 完善方法
+    - 修复重复结果的Bug
+	- zprogram补充搜集子域名的功能函数，具体用到的网站如下：
+        - chaxun.la
+        - subDomainsBrute
+        - outfile_去重复
+        - 读取domain空值判断
 
 - 待定 2-信息收集-Web站点信息收集
 

@@ -14,8 +14,8 @@ from utils.from_crtsh import *
 from utils.from_findsubdomain import *
 from utils.from_netcraft import *
 from utils.from_virustotal import *
-from utils.from_subDomainsBrute import *   # DNS爆破
-
+from utils.from_subDomainsBrute import from_SubDomainBrute   # DNS爆破
+from utils.from_chaxun_la import *
 
 # from 目录.文件名 import 函数或类
 # from utils.alexa import Alexa
@@ -35,7 +35,16 @@ def run(domain):
     result_path = os.path.join(script_path, 'result/{0}'.format(domain))  #  缓存路径
     if not os.path.exists(result_path):
         os.makedirs(result_path, 0777)                                      #  建立result目录内域名对应的目录
-    
+
+    #   from chaxun.la
+    logging.info("starting chaxun.la fetcher...")
+    result_file = os.path.join(result_path, 'chaxun_la.txt')  # 输出的文件名
+    result=from_chaxun_la(domain)
+    result = check_repeated(result)                         # 去重复函数
+    save_result(result_file,result)                         # 保存文件结果
+    logging.info("chaxun.la fetcher ({0}) subdomains({1}) successfully...".format(domain,len(result)))
+
+
     #   from crtsh
     logging.info("starting crtsh fetcher...")
     result_file = os.path.join(result_path, 'crtsh.txt')  # 输出的文件名
@@ -115,8 +124,11 @@ def outfile():
     with open(out_domain_result, 'w') as f:           # 输出路径结果 domain_result.txt
         for _file in glob.glob(out_dir + '*.txt'):
             with open(_file, 'r') as tmp_f:
-                content = tmp_f.read()
-            f.write(content)
+                for tem_list_value in tmp_f:
+                    tmp_list.append(tem_list_value.replace(' ', ''))
+        content=check_repeated(tmp_list)
+        for c_value in content:
+                f.write(c_value)
     print('[+] The output file is %s' % out_domain_result)
 
 # 读文件
@@ -146,6 +158,7 @@ if __name__ == '__main__':
     target = read_file(domain_files)
     # 批量运行查询子域名
     for target_list in target:
-        run(target_list)    # 单个查询
+        if target_list:
+            run(target_list)    # 单个查询
     # 从批量的结果中读取文本，然后汇总到起来
     outfile()
