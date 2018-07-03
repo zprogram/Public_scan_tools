@@ -111,6 +111,7 @@ def check_repeated(one_list):
 
 # 输出结果
 def outfile():
+    tmp_list = []
     with open(out_domain_result, 'w') as f:           # 输出路径结果 domain_result.txt
         for _file in glob.glob(out_dir + '*.txt'):
             with open(_file, 'r') as tmp_f:

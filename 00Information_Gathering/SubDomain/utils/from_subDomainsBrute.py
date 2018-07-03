@@ -5,7 +5,6 @@
 import multiprocessing
 import gevent
 from gevent import monkey
-monkey.patch_all()
 from gevent.queue import PriorityQueue
 import re
 import dns.resolver
@@ -17,6 +16,10 @@ from gevent.pool import Pool
 import shutil
 from config import *   #调用参数
 import logging
+
+
+monkey.patch_all()
+
 
 # 日志提示
 logging.basicConfig(
