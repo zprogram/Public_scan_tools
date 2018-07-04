@@ -1,5 +1,5 @@
 
-import requests
+import requests,time
 from bs4 import BeautifulSoup
 from .config import *
 def from_crtsh(target):
@@ -19,7 +19,7 @@ def from_crtsh(target):
                     if func_domain not in subdomains:
                         subdomains.append(func_domain)
     except Exception as e:
-        print(e.args)
-        print("restring...")
+        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"[ERROR]search_subdomain_from_crtsh  error %s" % e.args)
+        return []
     return subdomains
 

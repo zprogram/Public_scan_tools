@@ -17,6 +17,5 @@ def from_bugscaner(target):
                 subdomains.append(subdomain)
     except Exception as e:
         print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"[ERROR]search subdomain from bugscaner error :%s" % e.args)
-        print(time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())+"[INFO]restring...")
-        from_bugscaner(target)
+        return []
     return subdomains
