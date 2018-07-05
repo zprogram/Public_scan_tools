@@ -15,6 +15,7 @@ def from_virustotal(target):
         result = json.loads(resp.text)
     except Exception as e:
         print("search_subdomain_from_virustotal connect error"),e.args
+
     for i in range(len(result["data"])):
         #print(result["data"][i]["id"])
         if result["data"][i]["id"] not in subdomains:
