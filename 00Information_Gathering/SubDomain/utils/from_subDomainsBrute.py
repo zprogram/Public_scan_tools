@@ -319,7 +319,7 @@ def load_dns_servers():
 def from_SubDomainBrute(target):
    # {'full_scan': True, 'process': 6, 'i': False, 'threads': 200, 'file': 'subnames.txt', 'output': None}
     # 删除文件
-    tem_dir = os.getcwd() + "\\tmp\\"
+    tem_dir = os.getcwd() + "//tmp//"
     if os.path.exists(tem_dir):
         shutil.rmtree(tem_dir)
 

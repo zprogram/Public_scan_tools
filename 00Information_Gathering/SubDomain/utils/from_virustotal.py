@@ -15,6 +15,12 @@ def from_virustotal(target):
         result = json.loads(resp.text)
     except Exception as e:
         print("search_subdomain_from_virustotal connect error"),e.args
+        return subdomains
+
+    if 'data' in result:
+        print("get vistotal result sucess")
+    else:
+        return subdomains
 
     for i in range(len(result["data"])):
         #print(result["data"][i]["id"])
@@ -34,3 +40,6 @@ def from_virustotal(target):
         except:
             continue
     return subdomains
+
+if __name__ == '__main__':
+    from_virustotal("renrenche.com")

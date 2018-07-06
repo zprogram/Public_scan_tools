@@ -30,6 +30,9 @@
         - subDomainsBrute
         - outfile_去重复
         - 读取domain空值判断
+		- 修复virustotal，得不到结果报错问题
+		- 测试多个域名探测的阈值为2小时18个域名
+		- 修复兼容Linux、Windows问题
 
 - 待定 2-信息收集-Web站点信息收集
 
